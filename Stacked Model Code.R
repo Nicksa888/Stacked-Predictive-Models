@@ -120,20 +120,6 @@ best_glm <- h2o.glm(
 
 # Train and cross validate a Random Forest Model
 
-# First, identify optimal number of mtry
-
-ctrl <- trainControl(method = "repeatedcv",
-                     number = 10,
-                     repeats = 10)
-
-fit_rf <- train(rentals ~.,
-                data = bikes_train,
-                method = "rf",
-                trControl = ctrl)
-fit_rf$results
-
-# mtry with a value of 9 has the lowest RMSE, so we use that in the following random forest model
-
 best_rf <- h2o.randomForest(
   x = X,
   y = Y,
@@ -238,7 +224,8 @@ data.frame(
   GBM_pred = as.vector(h2o.getFrame(gbm_id$name))
   ) %>% cor()
 
-# The base learners all have very high correlations with each other, so stacking provides less advantage in this situation, especially as the RMSE in the stacked model was worse than in the Random Forest Model
+# The base learners all have very high correlations with each other, so stacking provides less advantage in this situation, especially as the RMSE in the stacked model was
+# worse than in the Random Forest Model
 
 ##########################
 ##########################
